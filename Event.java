@@ -1,30 +1,30 @@
-import java.util.Calendar;
+import java.time.LocalDate;
 
-public class Event {
+abstract class Event implements Comparable<Event> {
     private String name;
-    private Calendar dateTime;
+    private  LocalDate date;
 
     //compareTo takes an Event and compares that events date to another Event date
     //then returns a -1 for before, 0 for same day, and 1 for after
     //EX. 9-13-24.compare(9-22-24) gives a 1 for after
     public int compareTo(Event e){
-        return e.dateTime.compareTo(this.dateTime);
+        return e.date.compareTo(this.date);
     }
 
     //Following 4 methods are simple setters and getters
-    public void setName(String name){
+    void setName(String name){
         this.name = name;
     }
 
-    public void setDateTime(Calendar dateTime){
-        this.dateTime = dateTime;
+    void setDateTime(LocalDate date){
+        this.date = date;
     }
 
-    public Calendar getDateTime(){
-        return dateTime;
+    LocalDate getDateTime(){
+        return date;
     }
 
-    public String getName(){
+    String getName(){
         return name;
     }
 }
