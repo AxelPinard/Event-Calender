@@ -44,11 +44,22 @@ public class EventTester {
     };
 
     public static void main(String[] args) {
-        System.out.println("Testing Getters..." + (testGetters()? "passed" : "failed"));
-        System.out.println("Testing Setters..." + (testSetters()? "passed" : "failed"));
-        System.out.println("Testing implements Comparable..." + (testComparingEvents()? "passed" : "failed"));
-        System.out.println("Testing get meeting duration..." + (testMeetingDuration()? "passed" : "failed"));
-        System.out.println("Testing implements Completable..." + (testCompletable()? "passed" : "failed"));
+        System.out.println("Testing Getters..." + (testGetters() ? "passed" : "failed"));
+        System.out.println("Testing Setters..." + (testSetters() ? "passed" : "failed"));
+        System.out.println("Testing implements Comparable..." + (testComparingEvents() ? "passed" : "failed"));
+        System.out.println("Testing get meeting duration..." + (testMeetingDuration() ? "passed" : "failed"));
+        System.out.println("Testing implements Completable..." + (testCompletable() ? "passed" : "failed"));
+
+        firstMeeting.addReminder(0, 12, 0);
+        firstMeeting.addReminder(1, 12, 0);
+        firstMeeting.addReminder(2, 12, 0);
+
+        for (int i = 0; i < firstMeeting.reminders.length; i++) {
+            System.out.println(firstMeeting.reminders[i].getTimeBefore().toMinutes());
+            System.out.println(firstMeeting.reminders[i].getDateTime(firstMeeting));
+        }
+
+        
     }
 
     public static boolean testGetters() {
