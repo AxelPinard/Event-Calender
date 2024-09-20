@@ -19,7 +19,7 @@ public class Meeting extends Event implements Completable{
 
     //Setting up Reminders for our Meeting
     public void addReminder(int daysBefore, int hoursBefore, int minutesBefore){
-        Reminder newReminder = new Reminder(daysBefore,hoursBefore,minutesBefore);
+        Reminder newReminder = new Reminder(daysBefore,hoursBefore,minutesBefore, this);
         reminders = Arrays.copyOf(reminders, reminders.length + 1);
         reminders[reminders.length-1] = newReminder;
     }

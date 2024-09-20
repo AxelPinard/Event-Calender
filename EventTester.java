@@ -11,6 +11,7 @@ public class EventTester {
     static Deadline lastDeadline = new Deadline(lastDeadlineName, deadline );
     static Deadline midDeadline = new Deadline("Mid Deadline", deadline.minusDays(10) );
     static Deadline firstDeadline = new Deadline("First Deadline", deadline.minusDays(20) );
+    static Deadline RebekahBirthday = new Deadline("Rebekah Birthday",deadline.minusDays(76));
     static final int INCREMENT = 1;
 
     static LocalDateTime start = LocalDateTime.of(2024, 10, 7, 15, 0);
@@ -50,16 +51,18 @@ public class EventTester {
         System.out.println("Testing get meeting duration..." + (testMeetingDuration() ? "passed" : "failed"));
         System.out.println("Testing implements Completable..." + (testCompletable() ? "passed" : "failed"));
 
-        firstMeeting.addReminder(0, 12, 0);
-        firstMeeting.addReminder(1, 12, 0);
-        firstMeeting.addReminder(2, 12, 0);
+        System.out.println(RebekahBirthday.getDateTime());
 
-        for (int i = 0; i < firstMeeting.reminders.length; i++) {
-            System.out.println(firstMeeting.reminders[i].getTimeBefore().toMinutes());
-            System.out.println(firstMeeting.reminders[i].getDateTime(firstMeeting));
+        RebekahBirthday.addReminder(0,12,10);
+        System.out.println(RebekahBirthday.reminders[0].getReminder());
+
+        Urgency myUrgency = Urgency.VERYFAR;
+        for(Urgency x: Urgency.values()) {
+            myUrgency = x.getUrgency(myUrgency,RebekahBirthday.getDateTime());
         }
+        System.out.println(myUrgency.getAlert());
 
-        
+
     }
 
     public static boolean testGetters() {
