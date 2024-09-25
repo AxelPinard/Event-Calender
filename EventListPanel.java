@@ -1,6 +1,13 @@
 import javax.swing.*;
+import javax.xml.stream.EventFilter;
+import javax.xml.stream.events.XMLEvent;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Predicate;
 
 public class EventListPanel extends JPanel {
 
@@ -8,9 +15,12 @@ public class EventListPanel extends JPanel {
     ArrayList<Event> events;
     JPanel controlPanel;
     JPanel displayPanel;
-    JComboBox sortDropDown;
-    JCheckBox filterDisplay;
+    JComboBox<String> eventComboBox;
+    final String[] SORT_OPTIONS = {"DUE FIRST", "DUE LAST"};
     JButton addEventButton;
+    Map<String, Predicate<Event>> filters;
+    ArrayList<JCheckBox> filterBoxes;
+    CalenderEventFilters eventfilter = new CalenderEventFilters();
 
     //Other Variables
     private final int FrameSizeX = 750;
@@ -36,23 +46,68 @@ public class EventListPanel extends JPanel {
         });
         controlPanel.add(addEventButton);
 
+        //add Sorting
+        eventComboBox = new JComboBox(SORT_OPTIONS);
+        eventComboBox.setFont(new Font("Arial", Font.BOLD, 30));
+        eventComboBox.addActionListener(e -> {
+            if (eventComboBox.getSelectedItem().equals(SORT_OPTIONS[0]))
+                events.sort((a1,a2) -> a1.getDateTime().compareTo(a2.getDateTime()));
+            if (eventComboBox.getSelectedItem().equals(SORT_OPTIONS[1]))
+                events.sort((a1, a2) -> a2.getDateTime().compareTo(a1.getDateTime()));
+            updateDisplay();
+        });
+        controlPanel.add(eventComboBox);
+
+        //add Filtering
+        filters = new HashMap<>();
+        filters.putAll(eventfilter.getEventFilters());
+        filterBoxes = new ArrayList<>();
+
+        for ( String filter : filters.keySet()){
+            JCheckBox box = new JCheckBox(filter);
+            box.setFont(new Font("Arial", Font.BOLD, 30));
+            box.addItemListener(new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                    updateDisplay();
+                }
+            });
+            filterBoxes.add(box);
+        }
+
+        for (JCheckBox filter : filterBoxes)
+            controlPanel.add(filter);
+
+        displayPanel = new JPanel();
+        displayPanel.setPreferredSize(new Dimension(FrameSizeX, FrameSizeY));
 
         add(controlPanel);
+        add(displayPanel);
     }
 
     public void addEvent(Event event) {
-        System.out.println("Hi Inside");
         events.add(event);
-        System.out.println("Hi Inside2");
         updateDisplay();
-        System.out.println("Hi Inside3");
+    }
+
+    public boolean isFiltered(Event event)  {
+        boolean result = false;
+        for (JCheckBox filter : filterBoxes)
+            if (filter.isSelected()) {
+                Predicate<Event> pred = filters.get(filter.getText());
+                if (pred.test(event))
+                    result = true;
+            }
+        return result;
     }
 
     public void updateDisplay(){
-        //displayPanel.removeAll();
+        displayPanel.removeAll();
+        for (Event event : events) {
+            if(!isFiltered(event))
+                displayPanel.add(new EventPanel(event));
+        }
         revalidate();
         repaint();
-
     }
-
 }

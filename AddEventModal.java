@@ -124,9 +124,7 @@ public class AddEventModal extends JFrame {
                     break;
                 }
             }
-            System.out.println("hi before");
             eventListPanel.addEvent(newEvent);
-            System.out.println("hi after");
             modal.dispose();
         };
     }
