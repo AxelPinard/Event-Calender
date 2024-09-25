@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 
 public class EventTester {
 
-    static LocalDateTime deadline = LocalDateTime.of(2024, 12, 7, 17, 0);
+    static LocalDateTime deadline = LocalDateTime.of(2024, 12, 7, 1, 0);
     static String lastDeadlineName = "Last Deadline";
     static String lastDeadlineNameAlt = "Final Deadline";
     static Deadline lastDeadline = new Deadline(lastDeadlineName, deadline );
@@ -51,10 +51,12 @@ public class EventTester {
         System.out.println("Testing get meeting duration..." + (testMeetingDuration() ? "passed" : "failed"));
         System.out.println("Testing implements Completable..." + (testCompletable() ? "passed" : "failed"));
 
+
+        //My portion to test out urgency and reminders
         System.out.println(RebekahBirthday.getDateTime());
 
         RebekahBirthday.addReminder(0,12,10);
-        System.out.println(RebekahBirthday.reminders[0].getReminder());
+        System.out.println(RebekahBirthday.getReminders()[0].getReminder());
 
         Urgency myUrgency = Urgency.VERYFAR;
         for(Urgency x: Urgency.values()) {

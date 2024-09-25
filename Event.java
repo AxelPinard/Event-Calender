@@ -6,7 +6,7 @@ abstract class Event implements Comparable<Event> {
 
     //variable init
     private String name;
-    public  LocalDateTime dateTime;
+    private LocalDateTime dateTime;
 
     //Constructor
     public Event(String name, LocalDateTime dateTime){}
