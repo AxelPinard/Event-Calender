@@ -20,7 +20,7 @@ public class EventPanel extends JPanel {
         this.event = event;
         setBackground(new Color(r,g,b));
 
-        //creates the string for the label
+        //creates the string and buttons for the label
         String eventLabelString = event.getName() + " starts: " + event.getDateTime();
         if(event instanceof Meeting)
             eventLabelString += " lasts: " + ((Meeting)event).getDuration() + " at: " + ((Meeting) event).getLocation();
@@ -38,6 +38,5 @@ public class EventPanel extends JPanel {
         eventLabel.setFont(new Font("Serif", Font.BOLD, size));
         add(eventLabel);
         add(completeButton);
-
     }
 }

@@ -33,7 +33,7 @@ public class AddEventModal extends JFrame {
         attributes = new ArrayList<>();
 
         infoCollectorPanel = new JPanel();
-        infoCollectorPanel.setPreferredSize(new Dimension(600, 400));
+        infoCollectorPanel.setPreferredSize(new Dimension(700, 400));
         infoCollectorPanel.setBackground(Color.magenta);
 
         eventTypeComboBox = new JComboBox<String>(eventTypes);

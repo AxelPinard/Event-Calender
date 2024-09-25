@@ -111,8 +111,9 @@ public class EventListPanel extends JPanel {
     public void updateDisplay(){
         displayPanel.removeAll();
         for (Event event : events) {
-            if(!isFiltered(event))
-                displayPanel.add(new EventPanel(event,this));
+            if(!isFiltered(event)) {
+                displayPanel.add(new EventPanel(event, this));
+            }
         }
         revalidate();
         repaint();
