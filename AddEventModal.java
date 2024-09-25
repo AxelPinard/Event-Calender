@@ -1,20 +1,19 @@
 import javax.swing.*;
-import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class AddEventModal extends JFrame {
+
+    //variable and object init
     private EventListPanel eventListPanel;
     AddEventModal modal;
-
     record Attribute(String name, JTextField value) {}
-
     ArrayList<Attribute> attributes;
     JPanel infoCollectorPanel;
     JComboBox<String> eventTypeComboBox;
+    int collumsize = 8;
 
     public static final String[] eventTypes = {"Deadline", "Meeting"};
 
@@ -58,27 +57,27 @@ public class AddEventModal extends JFrame {
             infoCollectorPanel.removeAll();
             switch (eventTypeComboBox.getSelectedIndex()) {
                 case 0: {
-                    attributes.add(new Attribute("Name", new JTextField(10)));
-                    attributes.add(new Attribute("Year", new JTextField(10)));
-                    attributes.add(new Attribute("Month", new JTextField(10)));
-                    attributes.add(new Attribute("Day", new JTextField(10)));
-                    attributes.add(new Attribute("Hour", new JTextField(10)));
-                    attributes.add(new Attribute("Minute", new JTextField(10)));
+                    attributes.add(new Attribute("Name", new JTextField(collumsize)));
+                    attributes.add(new Attribute("Year", new JTextField(collumsize)));
+                    attributes.add(new Attribute("Month", new JTextField(collumsize)));
+                    attributes.add(new Attribute("Day", new JTextField(collumsize)));
+                    attributes.add(new Attribute("Hour", new JTextField(collumsize)));
+                    attributes.add(new Attribute("Minute", new JTextField(collumsize)));
                     break;
                 }
                 case 1: {
-                    attributes.add(new Attribute("Name", new JTextField(10)));
-                    attributes.add(new Attribute("Location", new JTextField(10)));
-                    attributes.add(new Attribute("Year", new JTextField(10)));
-                    attributes.add(new Attribute("Month", new JTextField(10)));
-                    attributes.add(new Attribute("Day", new JTextField(10)));
-                    attributes.add(new Attribute("Hour", new JTextField(10)));
-                    attributes.add(new Attribute("Minute", new JTextField(10)));
-                    attributes.add(new Attribute("End Year", new JTextField(10)));
-                    attributes.add(new Attribute("End Month", new JTextField(10)));
-                    attributes.add(new Attribute("End Day", new JTextField(10)));
-                    attributes.add(new Attribute("End Hour", new JTextField(10)));
-                    attributes.add(new Attribute("End Minute", new JTextField(10)));
+                    attributes.add(new Attribute("Name", new JTextField(collumsize)));
+                    attributes.add(new Attribute("Location", new JTextField(collumsize)));
+                    attributes.add(new Attribute("Year", new JTextField(collumsize)));
+                    attributes.add(new Attribute("Month", new JTextField(collumsize)));
+                    attributes.add(new Attribute("Day", new JTextField(collumsize)));
+                    attributes.add(new Attribute("Hour", new JTextField(collumsize)));
+                    attributes.add(new Attribute("Minute", new JTextField(collumsize)));
+                    attributes.add(new Attribute("End Year", new JTextField(collumsize)));
+                    attributes.add(new Attribute("End Month", new JTextField(collumsize)));
+                    attributes.add(new Attribute("End Day", new JTextField(collumsize)));
+                    attributes.add(new Attribute("End Hour", new JTextField(collumsize)));
+                    attributes.add(new Attribute("End Minute", new JTextField(collumsize)));
 
                     break;
                 }

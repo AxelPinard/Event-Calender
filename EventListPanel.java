@@ -1,6 +1,4 @@
 import javax.swing.*;
-import javax.xml.stream.EventFilter;
-import javax.xml.stream.events.XMLEvent;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -16,17 +14,16 @@ public class EventListPanel extends JPanel {
     JPanel controlPanel;
     JPanel displayPanel;
     JComboBox<String> eventComboBox;
-    final String[] SORT_OPTIONS = {"DUE FIRST", "DUE LAST"};
+    final String[] SORT_OPTIONS = {"DUE FIRST", "DUE LAST", "NAME", "REVERSE NAME"};
     JButton addEventButton;
     Map<String, Predicate<Event>> filters;
     ArrayList<JCheckBox> filterBoxes;
     CalenderEventFilters eventfilter = new CalenderEventFilters();
-
-    //Other Variables
     private final int FrameSizeX = 750;
     private final int FrameSizeY = 1000;
     private final int ControlPanelX = 700;
     private final int ControlPanelY = 300;
+    private final int size = 30;
 
 
     public EventListPanel() {
@@ -38,9 +35,13 @@ public class EventListPanel extends JPanel {
         controlPanel = new JPanel();
         controlPanel.setPreferredSize(new Dimension(ControlPanelX,ControlPanelY));
 
+        //Display Panel
+        displayPanel = new JPanel();
+        displayPanel.setPreferredSize(new Dimension(FrameSizeX, FrameSizeY));
+
         //Add Event Button
         addEventButton = new JButton("Add Event");
-        addEventButton.setFont(new Font("Serif", Font.BOLD, 30));
+        addEventButton.setFont(new Font("Serif", Font.BOLD, size));
         addEventButton.addActionListener(e -> {
             new AddEventModal(this);
         });
@@ -48,12 +49,16 @@ public class EventListPanel extends JPanel {
 
         //add Sorting
         eventComboBox = new JComboBox(SORT_OPTIONS);
-        eventComboBox.setFont(new Font("Arial", Font.BOLD, 30));
+        eventComboBox.setFont(new Font("Arial", Font.BOLD, size));
         eventComboBox.addActionListener(e -> {
             if (eventComboBox.getSelectedItem().equals(SORT_OPTIONS[0]))
                 events.sort((a1,a2) -> a1.getDateTime().compareTo(a2.getDateTime()));
             if (eventComboBox.getSelectedItem().equals(SORT_OPTIONS[1]))
                 events.sort((a1, a2) -> a2.getDateTime().compareTo(a1.getDateTime()));
+            if (eventComboBox.getSelectedItem().equals(SORT_OPTIONS[2]))
+                events.sort((a1, a2) -> a1.getName().compareTo(a2.getName()));
+            if (eventComboBox.getSelectedItem().equals(SORT_OPTIONS[3]))
+                events.sort((a1, a2) -> a2.getName().compareTo(a1.getName()));
             updateDisplay();
         });
         controlPanel.add(eventComboBox);
@@ -78,11 +83,13 @@ public class EventListPanel extends JPanel {
         for (JCheckBox filter : filterBoxes)
             controlPanel.add(filter);
 
-        displayPanel = new JPanel();
-        displayPanel.setPreferredSize(new Dimension(FrameSizeX, FrameSizeY));
-
         add(controlPanel);
         add(displayPanel);
+
+        //Default Events
+        EventPlanner.addDefaultEvents(this);
+
+
     }
 
     public void addEvent(Event event) {
@@ -105,7 +112,7 @@ public class EventListPanel extends JPanel {
         displayPanel.removeAll();
         for (Event event : events) {
             if(!isFiltered(event))
-                displayPanel.add(new EventPanel(event));
+                displayPanel.add(new EventPanel(event,this));
         }
         revalidate();
         repaint();
